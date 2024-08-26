@@ -22,8 +22,16 @@ export class AppComponent {
 
   public createComponent(): void {
     this.widgetContainerRef()?.clear(); // очищаем все старые динамические компоненты
+
     this.widgetComponentRef =
       this.widgetContainerRef()!.createComponent(WidgetComponent);
+
+    this.widgetComponentRef.setInput('title', 'new widget title');
+    this.widgetComponentRef.setInput('description', 'new widget description');
+
+    this.widgetComponentRef.instance.closed.subscribe(() => {
+      this.widgetComponentRef.destroy();
+    });
   }
 
   public destroyComponent(): void {
